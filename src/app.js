@@ -14,6 +14,7 @@ export default {
       added: null,
       page: 1,
       filter: '',
+      barWidth: 4
     };
   },
   created: async function () {
@@ -61,6 +62,11 @@ export default {
       if (maxValue == minValue) {
         return this.graph.map(() => 50)
       }
+      // if (this.graph.length === 25) {
+      //   this.graph = this.graph.map( val => 10 + ((val - minValue) * 90) / (maxValue - minValue));
+      //   return this.graph.filter(val => 
+      //     val.name.includes(this.filter.toUpperCase());
+      // }
       return this.graph.map(
         val => 10 + ((val - minValue) * 90) / (maxValue - minValue) 
       ); 
@@ -71,6 +77,9 @@ export default {
         filter: this.filter,
         page: this.page
       }
+    },
+    calcBarWidth() {
+      return 100 / this.barWidth + 1
     }
   },
   methods: {
@@ -93,7 +102,7 @@ export default {
     },
     async updateTickers() {
       const exchangeData = await loadTickers(this.tickers.map(ticker => ticker.name));
-      console.log(loadTickers(this.tickers.map(ticker => ticker.name)));
+      // console.log(loadTickers(this.tickers.map(ticker => ticker.name)));
 
       if (!this.tickers.length) {
         return
@@ -104,7 +113,11 @@ export default {
         ticker.price = price;
         if (this.selectedTicker?.name === ticker.name) {
           this.graph.push(ticker.price);
+          if (this.graph.length === this.calcBarWidth) {
+            this.graph.shift()
+          }
         }
+        
       });
 
 

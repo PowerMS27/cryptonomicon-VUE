@@ -165,8 +165,8 @@
           <div
             v-for="(bar, idx) in normalizedGraph"
             :key="idx"
-            :style="{ height: `${bar}%` }"
-            class="bg-purple-800 border w-10"></div>
+            :style="{ height: `${bar}%`, width: `${barWidth}%` }"
+            class="bg-purple-800 border"></div>
         </div>
         <button type="button" class="absolute top-0 right-0">
           <svg
@@ -197,7 +197,7 @@
           v-if="tickers.length <= 0"
           class="no-tickers"
         >
-          Нет добавленных тикеров
+          Нет добавленных тикеров 
       </div>
   </div>
   
